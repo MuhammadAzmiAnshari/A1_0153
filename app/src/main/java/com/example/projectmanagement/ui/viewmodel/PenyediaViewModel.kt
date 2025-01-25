@@ -10,6 +10,8 @@ import com.example.projectmanagement.ui.viewmodel.proyek.HomeProyekViewModel
 import com.example.projectmanagement.ui.viewmodel.proyek.TambahProyekViewModel
 import com.example.projectmanagement.ui.viewmodel.proyek.UpdateProyekViewModel
 import com.example.projectmanagement.ui.viewmodel.tim.HomeTimViewModel
+import com.example.projectmanagement.ui.viewmodel.tim.TambahTimViewModel
+import com.example.projectmanagement.ui.viewmodel.tim.UpdateTimViewModel
 import com.example.projectmanagement.ui.viewmodel.tugas.DetailTugasViewModel
 import com.example.projectmanagement.ui.viewmodel.tugas.TambahTugasViewModel
 import com.example.projectmanagement.ui.viewmodel.tugas.UpdateTugasViewModel
@@ -65,6 +67,18 @@ object PenyediaViewModel {
         //////////////////////////////////////////////////////////////////////////////////////////// Tim
         initializer {
             HomeTimViewModel(ProjectApplication().container.timRepository)
+        }
+        // TambahTimViewModel
+        initializer {
+            TambahTimViewModel(ProjectApplication().container.timRepository)
+        }
+        // UpdateTimViewModel
+        initializer {
+            UpdateTimViewModel(
+                timRepository = ProjectApplication().container.timRepository,
+                savedStateHandle = createSavedStateHandle(),
+
+                )
         }
 
     }
