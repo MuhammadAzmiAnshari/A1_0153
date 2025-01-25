@@ -39,6 +39,10 @@ object DestinasiTambahTim : DestinasiNavigasi {
     override val titleRes = "Tambah Tim"
 }
 
+object DestinasiUpdateTim : DestinasiNavigasi {
+    override val route = "update_tim/{timId}"
+    override val titleRes = "Update Tim"
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////// Destinasi Tugas
 
 object DestinasiDetailTugas : DestinasiNavigasi {
