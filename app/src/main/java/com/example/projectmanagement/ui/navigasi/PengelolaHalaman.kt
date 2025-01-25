@@ -38,7 +38,7 @@ fun PengelolaHalaman(
                 onTimButton = { navController.navigate(DestinasiHomeTim.route) }
             )
         }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////// Proyek
         // Rute untuk HomeProyekView
         composable(route = DestinasiHomeProyek.route) {
             HomeProyekView(
@@ -85,6 +85,18 @@ fun PengelolaHalaman(
                     navController.navigate("${DestinasiUpdateProyek.route}/$proyekId")
                 },
                 modifier = Modifier
+            )
+        }
+
+        // Rute untuk HomeTimView
+        composable(route = DestinasiHomeTim.route) {
+            HomeTimView(
+                onTambahTimClick = { navController.navigate(DestinasiTambahTim.route) },
+                onUpdateTimClick = { timId ->
+                    navController.navigate("${DestinasiUpdateTim.route}/$timId")
+                },
+                canNavigateBack = true,
+                navigateUp = { navController.navigateUp() }
             )
         }
 
