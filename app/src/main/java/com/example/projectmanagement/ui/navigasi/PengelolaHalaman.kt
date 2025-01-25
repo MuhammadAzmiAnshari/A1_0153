@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.projectmanagement.ui.view.HomeView
 import com.example.projectmanagement.ui.view.proyek.DetailProyekView
 import com.example.projectmanagement.ui.view.proyek.HomeProyekView
 import com.example.projectmanagement.ui.view.proyek.TambahProyekView
@@ -26,9 +27,18 @@ fun PengelolaHalaman(
 ) {
     NavHost(
         navController = navController,
-        startDestination = DestinasiHomeProyek.route, // Ubah startDestination ke HomeProyekView
+        startDestination = DestinasiHome.route,
         modifier = modifier
     ) {
+
+        // Rute untuk HomeView
+        composable(route = DestinasiHome.route) {
+            HomeView(
+                onProyekButton = { navController.navigate(DestinasiHomeProyek.route) },
+                onTimButton = { navController.navigate(DestinasiHomeTim.route) }
+            )
+        }
+
         // Rute untuk HomeProyekView
         composable(route = DestinasiHomeProyek.route) {
             HomeProyekView(
