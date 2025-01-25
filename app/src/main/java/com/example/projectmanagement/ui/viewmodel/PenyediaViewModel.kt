@@ -9,6 +9,7 @@ import com.example.projectmanagement.applications.ProjectApplications
 import com.example.projectmanagement.ui.viewmodel.proyek.HomeProyekViewModel
 import com.example.projectmanagement.ui.viewmodel.proyek.TambahProyekViewModel
 import com.example.projectmanagement.ui.viewmodel.proyek.UpdateProyekViewModel
+import com.example.projectmanagement.ui.viewmodel.tim.DetailTimViewModel
 import com.example.projectmanagement.ui.viewmodel.tim.HomeTimViewModel
 import com.example.projectmanagement.ui.viewmodel.tim.TambahTimViewModel
 import com.example.projectmanagement.ui.viewmodel.tim.UpdateTimViewModel
@@ -82,7 +83,13 @@ object PenyediaViewModel {
 
                 )
         }
-
+        // DetailTimViewModel
+        initializer {
+            DetailTimViewModel(
+                timRepository = ProjectApplication().container.timRepository,
+                savedStateHandle = createSavedStateHandle()
+            )
+        }
     }
 }
 

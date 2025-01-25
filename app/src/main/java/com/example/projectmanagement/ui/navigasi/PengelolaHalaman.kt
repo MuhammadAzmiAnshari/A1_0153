@@ -13,6 +13,8 @@ import com.example.projectmanagement.ui.view.proyek.DetailProyekView
 import com.example.projectmanagement.ui.view.proyek.HomeProyekView
 import com.example.projectmanagement.ui.view.proyek.TambahProyekView
 import com.example.projectmanagement.ui.view.proyek.UpdateProyekView
+import com.example.projectmanagement.ui.view.tim.DestinasiDetailTim
+import com.example.projectmanagement.ui.view.tim.DetailTimView
 import com.example.projectmanagement.ui.view.tim.HomeTimView
 import com.example.projectmanagement.ui.view.tim.TambahTimView
 import com.example.projectmanagement.ui.view.tim.UpdateTimView
@@ -87,13 +89,13 @@ fun PengelolaHalaman(
                 modifier = Modifier
             )
         }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////// Tim
         // Rute untuk HomeTimView
         composable(route = DestinasiHomeTim.route) {
             HomeTimView(
                 onTambahTimClick = { navController.navigate(DestinasiTambahTim.route) },
-                onUpdateTimClick = { timId ->
-                    navController.navigate("${DestinasiUpdateTim.route}/$timId")
+                onDetailTimClick = { timId ->
+                    navController.navigate("${DestinasiDetailTim.route}/$timId") // Navigasi ke DetailTimView
                 },
                 canNavigateBack = true,
                 navigateUp = { navController.navigateUp() }
@@ -120,7 +122,21 @@ fun PengelolaHalaman(
                 navigateUp = { navController.navigateUp() }
             )
         }
+        // Rute untuk DetailTimView
+        composable(
+            route = DestinasiDetailTim.routeWithArg,
+            arguments = listOf(navArgument(DestinasiDetailTim.TIM_ID) { type = NavType.IntType })
+        ) { backStackEntry ->
+            val timId = backStackEntry.arguments?.getInt(DestinasiDetailTim.TIM_ID) ?: 0
+            DetailTimView(
+                navigateBack = { navController.navigateUp() },
+                navigateToEdit = { timId ->
+                    navController.navigate("${DestinasiUpdateTim.route}/$timId")
+                }
+            )
+        }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////// Tugas
         // Rute untuk DetailTugasView
         composable(
             route = DestinasiDetailTugas.routeWithArg,

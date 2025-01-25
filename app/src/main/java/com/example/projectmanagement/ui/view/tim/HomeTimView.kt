@@ -46,7 +46,7 @@ fun HomeTimView(
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = {},
     onTambahTimClick: () -> Unit,
-    onUpdateTimClick: (Int) -> Unit,
+    onDetailTimClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     // State dari ViewModel
@@ -123,7 +123,7 @@ fun HomeTimView(
                         TimItem(
                             tim = tim,
                             onDelete = { viewModel.deleteTim(tim.id_tim) },
-                            onUpdate = { onUpdateTimClick(tim.id_tim) }
+                            onDetailClick = { onDetailTimClick(tim.id_tim) }
                         )
                     }
                 }
@@ -136,7 +136,7 @@ fun HomeTimView(
 fun TimItem(
     tim: Tim,
     onDelete: () -> Unit,
-    onUpdate: () -> Unit
+    onDetailClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -165,12 +165,14 @@ fun TimItem(
                 Text("Hapus Tim")
             }
             Spacer(modifier = Modifier.height(8.dp))
+
             Button(
-                onClick = onUpdate,
+                onClick = onDetailClick,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Update Tim")
+                Text("Detail Tim")
             }
+
         }
     }
 }
