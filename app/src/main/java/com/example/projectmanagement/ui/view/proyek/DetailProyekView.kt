@@ -1,22 +1,13 @@
 package com.example.projectmanagement.ui.view.proyek
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,7 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.projectmanagement.model.Proyek
+import com.example.projectmanagement.model.Tugas
 import com.example.projectmanagement.ui.CostumeTopAppBar
 import com.example.projectmanagement.ui.navigasi.DestinasiNavigasi
 import com.example.projectmanagement.ui.viewmodel.PenyediaViewModel
@@ -44,7 +37,8 @@ object DestinasiDetailProyek : DestinasiNavigasi {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailProyekView( // Ubah nama dari DetailProyekScreen menjadi DetailProyekView
+fun DetailProyekView(
+    navController: NavController,
     navigateBack: () -> Unit,
     navigateToEdit: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -54,12 +48,14 @@ fun DetailProyekView( // Ubah nama dari DetailProyekScreen menjadi DetailProyekV
 
     // Mengambil state dari ViewModel
     val proyek by viewModel.proyek.collectAsState()
+    val tugasList by viewModel.tugasList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
 
-    // Memuat detail proyek saat pertama kali tampil
+    // Memuat detail proyek dan daftar tugas saat pertama kali tampil
     LaunchedEffect(Unit) {
         viewModel.loadProyekDetail()
+        viewModel.loadTugasByProyekId()
     }
 
     Scaffold(
@@ -87,9 +83,13 @@ fun DetailProyekView( // Ubah nama dari DetailProyekScreen menjadi DetailProyekV
     ) { innerPadding ->
         BodyDetailProyek(
             proyek = proyek,
+            tugasList = tugasList,
             isLoading = isLoading,
             errorMessage = errorMessage,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onTugasClick = { tugasId ->
+                navController.navigate("detail_tugas/$tugasId")
+            }
         )
     }
 }
@@ -97,9 +97,11 @@ fun DetailProyekView( // Ubah nama dari DetailProyekScreen menjadi DetailProyekV
 @Composable
 fun BodyDetailProyek(
     proyek: Proyek?,
+    tugasList: List<Tugas>,
     isLoading: Boolean,
     errorMessage: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTugasClick: (Int) -> Unit
 ) {
     when {
         isLoading -> {
@@ -127,22 +129,34 @@ fun BodyDetailProyek(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                ItemDetailProyek(
-                    proyek = proyek,
-                    modifier = modifier
+                ItemDetailProyek(proyek = proyek)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Daftar Tugas",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(vertical = 8.dp)
                 )
+
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    items(tugasList) { tugas ->
+                        TugasItem(
+                            tugas = tugas,
+                            onClick = { onTugasClick(tugas.id_tugas) }
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun ItemDetailProyek(
-    modifier: Modifier = Modifier,
-    proyek: Proyek
-) {
+fun ItemDetailProyek(proyek: Proyek) {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp),
         colors = CardDefaults.cardColors(
@@ -188,5 +202,26 @@ fun ComponentDetailProyek(
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
+    }
+}
+
+@Composable
+fun TugasItem(
+    tugas: Tugas,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = "Nama Tugas: ${tugas.nama_tugas}", fontWeight = FontWeight.Bold)
+            Text(text = "Deskripsi: ${tugas.deskripsi_tugas}")
+            Text(text = "Prioritas: ${tugas.prioritas}")
+            Text(text = "Status: ${tugas.status_tugas}")
+        }
     }
 }

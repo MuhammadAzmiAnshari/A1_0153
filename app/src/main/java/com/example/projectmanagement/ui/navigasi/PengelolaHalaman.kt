@@ -12,6 +12,9 @@ import com.example.projectmanagement.ui.view.proyek.DetailProyekView
 import com.example.projectmanagement.ui.view.proyek.HomeProyekView
 import com.example.projectmanagement.ui.view.proyek.TambahProyekView
 import com.example.projectmanagement.ui.view.proyek.UpdateProyekView
+import com.example.projectmanagement.ui.view.tim.HomeTimView
+import com.example.projectmanagement.ui.view.tim.TambahTimView
+import com.example.projectmanagement.ui.view.tim.UpdateTimView
 import com.example.projectmanagement.ui.view.tugas.DetailTugasView
 import com.example.projectmanagement.ui.view.tugas.TambahTugasView
 import com.example.projectmanagement.ui.view.tugas.UpdateTugasView
@@ -48,10 +51,10 @@ fun PengelolaHalaman(
 
         // Rute untuk UpdateProyekView
         composable(
-            route = "${DestinasiUpdateProyek.route}/{proyekId}",
-            arguments = listOf(navArgument("proyekId") { type = NavType.IntType })
+            route = DestinasiUpdateProyek.routeWithArg,
+            arguments = listOf(navArgument(DestinasiUpdateProyek.PROYEK_ID) { type = NavType.IntType })
         ) { backStackEntry ->
-            val proyekId = backStackEntry.arguments?.getInt("proyekId") ?: 0
+            val proyekId = backStackEntry.arguments?.getInt(DestinasiUpdateProyek.PROYEK_ID) ?: 0
             UpdateProyekView(
                 proyekId = proyekId,
                 canNavigateBack = true,
@@ -61,23 +64,47 @@ fun PengelolaHalaman(
 
         // Rute untuk DetailProyekView
         composable(
-            route = "${DestinasiDetailProyek.route}/{proyekId}",
-            arguments = listOf(navArgument("proyekId") { type = NavType.IntType })
+            route = DestinasiDetailProyek.routeWithArg,
+            arguments = listOf(navArgument(DestinasiDetailProyek.PROYEK_ID) { type = NavType.IntType })
         ) { backStackEntry ->
-            val proyekId = backStackEntry.arguments?.getInt("proyekId") ?: 0
+            val proyekId = backStackEntry.arguments?.getInt(DestinasiDetailProyek.PROYEK_ID) ?: 0
             DetailProyekView(
-                navigateBack = { navController.navigateUp() }, // Navigasi kembali
-                navigateToEdit = { "${DestinasiUpdateProyek.route}/{proyekId}" },
+                navController = navController, // Tambahkan ini
+                navigateBack = { navController.navigateUp() },
+                navigateToEdit = { proyekId ->
+                    navController.navigate("${DestinasiUpdateProyek.route}/$proyekId")
+                },
                 modifier = Modifier
+            )
+        }
+
+        // Rute untuk TambahTimView
+        composable(route = DestinasiTambahTim.route) {
+            TambahTimView(
+                canNavigateBack = true,
+                navigateUp = { navController.navigateUp() }
+            )
+        }
+
+        // Rute untuk UpdateTimView
+        composable(
+            route = DestinasiUpdateTim.routeWithArg,
+            arguments = listOf(navArgument(DestinasiUpdateTim.TIM_ID) { type = NavType.IntType })
+        ) { backStackEntry ->
+            val timId = backStackEntry.arguments?.getInt(DestinasiUpdateTim.TIM_ID) ?: 0
+            UpdateTimView(
+                timId = timId,
+                canNavigateBack = true,
+                navigateUp = { navController.navigateUp() }
             )
         }
 
         // Rute untuk DetailTugasView
         composable(
-            route = "${DestinasiDetailTugas.route}/{tugasId}",
-            arguments = listOf(navArgument("tugasId") { type = NavType.IntType })
+            route = DestinasiDetailTugas.routeWithArg,
+            arguments = listOf(navArgument(DestinasiDetailTugas.TUGAS_ID) { type = NavType.IntType })
         ) { backStackEntry ->
-            val tugasId = backStackEntry.arguments?.getInt("tugasId") ?: 0
+            val tugasId = backStackEntry.arguments?.getInt(DestinasiDetailTugas.TUGAS_ID) ?: 0
             DetailTugasView(
                 tugasId = tugasId,
                 canNavigateBack = true,
@@ -97,10 +124,10 @@ fun PengelolaHalaman(
 
         // Rute untuk UpdateTugasView
         composable(
-            route = "${DestinasiUpdateTugas.route}/{tugasId}",
-            arguments = listOf(navArgument("tugasId") { type = NavType.IntType })
+            route = DestinasiUpdateTugas.routeWithArg,
+            arguments = listOf(navArgument(DestinasiUpdateTugas.TUGAS_ID) { type = NavType.IntType })
         ) { backStackEntry ->
-            val tugasId = backStackEntry.arguments?.getInt("tugasId") ?: 0
+            val tugasId = backStackEntry.arguments?.getInt(DestinasiUpdateTugas.TUGAS_ID) ?: 0
             UpdateTugasView(
                 tugasId = tugasId,
                 canNavigateBack = true,

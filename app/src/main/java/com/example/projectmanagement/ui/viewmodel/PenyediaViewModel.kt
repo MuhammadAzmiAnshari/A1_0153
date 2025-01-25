@@ -39,7 +39,9 @@ object PenyediaViewModel {
         // DetailProyekViewModel
         initializer {
             DetailProyekViewModel(proyekRepository = ProjectApplication().container.proyekRepository,
-                savedStateHandle = createSavedStateHandle()
+                savedStateHandle = createSavedStateHandle(),
+                tugasRepository = ProjectApplication().container.tugasRepository
+
             )
         }
 

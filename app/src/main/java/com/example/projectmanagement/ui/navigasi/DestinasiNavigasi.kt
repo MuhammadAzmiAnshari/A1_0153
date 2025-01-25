@@ -6,19 +6,21 @@ interface DestinasiNavigasi {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// Destinasi Proyek
-object DestinasiHomeProyek: DestinasiNavigasi {
+object DestinasiHomeProyek : DestinasiNavigasi {
     override val route = "home"
     override val titleRes = "Daftar Proyek"
 }
 
-object DestinasiTambahProyek: DestinasiNavigasi {
+object DestinasiTambahProyek : DestinasiNavigasi {
     override val route = "tambah_proyek"
     override val titleRes = "Tambah Proyek"
 }
 
-object DestinasiUpdateProyek: DestinasiNavigasi {
-    override val route = "update_proyek/{proyekId}"
+object DestinasiUpdateProyek : DestinasiNavigasi {
+    override val route = "update_proyek"
+    const val PROYEK_ID = "proyekId"
     override val titleRes = "Update Proyek"
+    val routeWithArg = "$route/{$PROYEK_ID}"
 }
 
 object DestinasiDetailProyek : DestinasiNavigasi {
@@ -40,14 +42,18 @@ object DestinasiTambahTim : DestinasiNavigasi {
 }
 
 object DestinasiUpdateTim : DestinasiNavigasi {
-    override val route = "update_tim/{timId}"
+    override val route = "update_tim"
+    const val TIM_ID = "timId"
     override val titleRes = "Update Tim"
+    val routeWithArg = "$route/{$TIM_ID}"
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////// Destinasi Tugas
 
+//////////////////////////////////////////////////////////////////////////////////////////////////// Destinasi Tugas
 object DestinasiDetailTugas : DestinasiNavigasi {
-    override val route = "detail_tugas/{tugasId}"
+    override val route = "detail_tugas"
+    const val TUGAS_ID = "tugasId"
     override val titleRes = "Detail Tugas"
+    val routeWithArg = "$route/{$TUGAS_ID}"
 }
 
 object DestinasiTambahTugas : DestinasiNavigasi {
@@ -56,6 +62,8 @@ object DestinasiTambahTugas : DestinasiNavigasi {
 }
 
 object DestinasiUpdateTugas : DestinasiNavigasi {
-    override val route = "update_tugas/{tugasId}"
+    override val route = "update_tugas"
+    const val TUGAS_ID = "tugasId"
     override val titleRes = "Update Tugas"
+    val routeWithArg = "$route/{$TUGAS_ID}"
 }

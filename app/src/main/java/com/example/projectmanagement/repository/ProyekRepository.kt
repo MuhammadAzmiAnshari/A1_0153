@@ -1,6 +1,7 @@
 package com.example.projectmanagement.repository
 
 import com.example.projectmanagement.model.Proyek
+import com.example.projectmanagement.model.Tugas
 import com.example.projectmanagement.service.ApiService
 import retrofit2.Response
 
@@ -11,6 +12,7 @@ interface ProyekRepository {
     suspend fun createProyek(proyek: Proyek): Response<Proyek>
     suspend fun updateProyek(proyekId: Int, proyek: Proyek): Response<Proyek>
     suspend fun deleteProyek(proyekId: Int): Response<Void>
+    suspend fun getTugasByProyekId(proyekId: Int): Response<List<Tugas>>
 }
 
 class NetworkProyekRepository(private val apiService: ApiService) : ProyekRepository {
@@ -33,6 +35,10 @@ class NetworkProyekRepository(private val apiService: ApiService) : ProyekReposi
 
     override suspend fun deleteProyek(proyekId: Int): Response<Void> {
         return apiService.deleteProyek(proyekId)
+    }
+
+    override suspend fun getTugasByProyekId(proyekId: Int): Response<List<Tugas>> {
+        return apiService.getTugasByProyekId(proyekId)
     }
 }
 
