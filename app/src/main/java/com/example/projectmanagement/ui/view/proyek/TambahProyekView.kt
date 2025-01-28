@@ -1,6 +1,7 @@
 package com.example.projectmanagement.ui.view.proyek
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -105,13 +107,22 @@ fun TambahProyekView(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Input Status Proyek
-            OutlinedTextField(
-                value = statusProyek,
-                onValueChange = { viewModel.statusProyek.value = it },
-                label = { Text("Status Proyek") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-            )
+            Text("Status Proyek")
+            val statusOptions = listOf("Aktif", "Tidak Aktif")
+            Column {
+                statusOptions.forEach { option ->
+                    Row(
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    ) {
+                        RadioButton(
+                            selected = (statusProyek == option),
+                            onClick = { viewModel.statusProyek.value = option }
+                        )
+                        Text(text = option, modifier = Modifier.padding(start = 8.dp))
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
