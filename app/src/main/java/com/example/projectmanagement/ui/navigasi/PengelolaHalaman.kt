@@ -150,7 +150,9 @@ fun PengelolaHalaman(
                 canNavigateBack = true,
                 navigateUp = { navController.navigateUp() },
                 onDeleteTugas = { /* Handle delete tugas */ },
-                onUpdateTugas = { /* Handle update tugas */ },
+                onUpdateTugas = { tugasId ->
+                    navController.navigate("${DestinasiUpdateTugas.route}/$tugasId")
+                }
             )
         }
 
