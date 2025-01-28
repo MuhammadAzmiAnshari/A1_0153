@@ -106,12 +106,22 @@ fun TambahTugasView(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Input Status Tugas
-            OutlinedTextField(
-                value = statusTugas,
-                onValueChange = { viewModel.statusTugas.value = it },
-                label = { Text("Status Tugas") },
-                modifier = Modifier.fillMaxWidth()
-            )
+            Text("Status Tugas")
+            val statusOptions = listOf("Belum Mulai", "Sedang Berjalan", "Selesai")
+            Column {
+                statusOptions.forEach { option ->
+                    Row(
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    ) {
+                        RadioButton(
+                            selected = (statusTugas == option),
+                            onClick = { viewModel.statusTugas.value = option }
+                        )
+                        Text(text = option, modifier = Modifier.padding(start = 8.dp))
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
