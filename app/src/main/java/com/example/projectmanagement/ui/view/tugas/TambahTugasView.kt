@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -84,13 +85,23 @@ fun TambahTugasView(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Input Prioritas Tugas
-            OutlinedTextField(
-                value = prioritasTugas,
-                onValueChange = { viewModel.prioritasTugas.value = it },
-                label = { Text("Prioritas Tugas") },
-                modifier = Modifier.fillMaxWidth()
-            )
+
+            Text("Prioritas Tugas")
+            val prioritasOptions = listOf("Rendah", "Sedang", "Tinggi")
+            Row {
+                prioritasOptions.forEach { option ->
+                    Row(
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                        modifier = Modifier.padding(end = 16.dp)
+                    ) {
+                        RadioButton(
+                            selected = (prioritasTugas == option),
+                            onClick = { viewModel.prioritasTugas.value = option }
+                        )
+                        Text(text = option, modifier = Modifier.padding(start = 8.dp))
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
