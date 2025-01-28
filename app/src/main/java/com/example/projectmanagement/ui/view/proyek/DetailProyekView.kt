@@ -41,6 +41,7 @@ fun DetailProyekView(
     navController: NavController,
     navigateBack: () -> Unit,
     navigateToEdit: (Int) -> Unit,
+    navigateToTambahTugas: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailProyekViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
@@ -69,17 +70,31 @@ fun DetailProyekView(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navigateToEdit(proyek?.id_proyek ?: 0) },
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
+            Row(
+                modifier = Modifier.padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit Proyek"
-                )
+                FloatingActionButton(
+                    onClick = { navigateToEdit(proyek?.id_proyek ?: 0) },
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit Proyek"
+                    )
+                }
+                FloatingActionButton(
+                    onClick = { navigateToTambahTugas(proyek?.id_proyek ?: 0) },
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Tambah Tugas"
+                    )
+                }
             }
         }
+
     ) { innerPadding ->
         BodyDetailProyek(
             proyek = proyek,

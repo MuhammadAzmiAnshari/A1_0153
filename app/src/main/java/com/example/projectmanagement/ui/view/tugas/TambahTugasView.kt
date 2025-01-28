@@ -29,7 +29,8 @@ fun TambahTugasView(
     viewModel: TambahTugasViewModel = viewModel(factory = PenyediaViewModel.Factory),
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    proyekId: Int? = null // Tambahkan parameter proyekId
 ) {
     // State dari ViewModel
     val namaTugas by viewModel.namaTugas
@@ -105,7 +106,11 @@ fun TambahTugasView(
 
             // Tombol Tambah Tugas
             Button(
-                onClick = { viewModel.tambahTugas(idProyek = 1, idTim = 1) }, // Ganti dengan idProyek dan idTim yang sesuai
+                onClick = {
+                    if (proyekId != null) {
+                        viewModel.tambahTugas(idProyek = proyekId, idTim = 1) // Ganti idTim dengan nilai yang sesuai
+                    }
+                },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             ) {

@@ -12,7 +12,7 @@ interface ProyekRepository {
     suspend fun createProyek(proyek: Proyek): Response<Proyek>
     suspend fun updateProyek(proyekId: Int, proyek: Proyek): Response<Proyek>
     suspend fun deleteProyek(proyekId: Int): Response<Void>
-    suspend fun getTugasByProyekId(proyekId: Int): Response<List<Tugas>>
+
 }
 
 class NetworkProyekRepository(private val apiService: ApiService) : ProyekRepository {
@@ -37,8 +37,6 @@ class NetworkProyekRepository(private val apiService: ApiService) : ProyekReposi
         return apiService.deleteProyek(proyekId)
     }
 
-    override suspend fun getTugasByProyekId(proyekId: Int): Response<List<Tugas>> {
-        return apiService.getTugasByProyekId(proyekId)
-    }
+
 }
 

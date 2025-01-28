@@ -63,7 +63,9 @@ object DestinasiDetailTugas : DestinasiNavigasi {
 
 object DestinasiTambahTugas : DestinasiNavigasi {
     override val route = "tambah_tugas"
+    const val PROYEK_ID = "proyekId"
     override val titleRes = "Tambah Tugas"
+    val routeWithArg = "$route/{$PROYEK_ID}"
 }
 
 object DestinasiUpdateTugas : DestinasiNavigasi {

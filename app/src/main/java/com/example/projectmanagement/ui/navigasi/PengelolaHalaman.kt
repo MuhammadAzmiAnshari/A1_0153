@@ -81,12 +81,14 @@ fun PengelolaHalaman(
         ) { backStackEntry ->
             val proyekId = backStackEntry.arguments?.getInt(DestinasiDetailProyek.PROYEK_ID) ?: 0
             DetailProyekView(
-                navController = navController, // Tambahkan ini
+                navController = navController,
                 navigateBack = { navController.navigateUp() },
                 navigateToEdit = { proyekId ->
                     navController.navigate("${DestinasiUpdateProyek.route}/$proyekId")
                 },
-                modifier = Modifier
+                navigateToTambahTugas = { proyekId ->
+                    navController.navigate("${DestinasiTambahTugas.route}/$proyekId")
+                }
             )
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////// Tim
@@ -148,13 +150,18 @@ fun PengelolaHalaman(
                 canNavigateBack = true,
                 navigateUp = { navController.navigateUp() },
                 onDeleteTugas = { /* Handle delete tugas */ },
-                onUpdateTugas = { /* Handle update tugas */ }
+                onUpdateTugas = { /* Handle update tugas */ },
             )
         }
 
         // Rute untuk TambahTugasView
-        composable(route = DestinasiTambahTugas.route) {
+        composable(
+            route = DestinasiTambahTugas.routeWithArg,
+            arguments = listOf(navArgument(DestinasiTambahTugas.PROYEK_ID) { type = NavType.IntType })
+        ) { backStackEntry ->
+            val proyekId = backStackEntry.arguments?.getInt(DestinasiTambahTugas.PROYEK_ID) ?: 0
             TambahTugasView(
+                proyekId = proyekId, // Teruskan proyekId ke TambahTugasView
                 canNavigateBack = true,
                 navigateUp = { navController.navigateUp() }
             )
@@ -172,5 +179,7 @@ fun PengelolaHalaman(
                 navigateUp = { navController.navigateUp() }
             )
         }
+
+
     }
 }
