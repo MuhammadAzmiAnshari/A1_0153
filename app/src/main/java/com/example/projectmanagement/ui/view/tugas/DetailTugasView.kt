@@ -101,7 +101,7 @@ fun DetailTugasView(
             if (tugas != null) {
                 TugasDetailItem(
                     tugas = tugas!!,
-                    onDelete = { viewModel.deleteTugas(tugasId); onDeleteTugas() },
+                    onDelete = { viewModel.deleteTugas(tugasId) },
                     onUpdate = { onUpdateTugas(tugasId) }
                 )
             } else if (!isLoading) {
