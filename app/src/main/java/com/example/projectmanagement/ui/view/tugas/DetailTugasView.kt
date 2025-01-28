@@ -47,7 +47,7 @@ fun DetailTugasView(
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = {},
     onDeleteTugas: () -> Unit,
-    onUpdateTugas: () -> Unit,
+    onUpdateTugas: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     // State dari ViewModel
@@ -102,7 +102,7 @@ fun DetailTugasView(
                 TugasDetailItem(
                     tugas = tugas!!,
                     onDelete = { viewModel.deleteTugas(tugasId); onDeleteTugas() },
-                    onUpdate = onUpdateTugas
+                    onUpdate = { onUpdateTugas(tugasId) }
                 )
             } else if (!isLoading) {
                 Text(
